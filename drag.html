@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag & Drop</title>
+    <style>
+        #container1,
+        #container2 {
+            width: 200px;
+            height: 200px;
+            border: 1px solid #000;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        #drag1,#drag2 {
+            cursor: move;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            let divId = localStorage.getItem("class");
+            if(divId === "container1"){
+                document.getElementById("drag1").style.display = "block";
+            }else{
+                document.getElementById("drag2").style.display = "block";
+            }
+            
+        };
+        function drag(ev) {
+            ev.dataTransfer.setData("image", ev.target.id);
+        }
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drop1(ev) {
+            ev.preventDefault();
+            var data = ev.dataTransfer.getData("image");
+            localStorage.setItem("class", "container1")
+            ev.target.appendChild(document.getElementById(data));
+        }
+        function drop2(ev) {
+            ev.preventDefault();
+            var data = ev.dataTransfer.getData("image");
+            localStorage.setItem("class", "container2")
+            ev.target.appendChild(document.getElementById(data));
+        }
+
+    </script>
+</head>
+
+<body>
+
+    <div id="container1" ondragover="allowDrop(event)" ondrop="drop1(event)">
+        <img id="drag1" src="http://sipshrms.in/uploads/profile/profile_E-2373.jpg" alt="" draggable="true"
+        ondragstart="drag(event)" style="width:200px; height:200px; display:none;">
+    </div>
+
+    <div id="container2" ondragover="allowDrop(event)" ondrop="drop2(event)">
+        <img id="drag2" src="http://sipshrms.in/uploads/profile/profile_E-2373.jpg" alt="" draggable="true"
+            ondragstart="drag(event)" style="width:200px; height:200px; display:none;">
+    </div>
+
+</body>
+
+</html>

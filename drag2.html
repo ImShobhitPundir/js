@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container{
+            display:flex;
+        }
+        #progress,#complete{
+            width: 300px;
+            height: 300px;
+            border: 1px solid #000;
+            padding: 10px;
+            margin-left: 10px;
+        }
+        ul{
+            list-style-type:none;
+            width: 200px;
+            height: 200px;
+        }
+        li{
+            background-color: #EE9E58;
+            border:1px solid #000;
+            padding: 2px;
+            margin-top: 5px;
+            cursor:move;
+        }
+    </style>
+    <script>
+        function drag(ev){
+            ev.dataTransfer.setData('list',ev.target.id);
+        }
+        function allowDrop(ev){
+            ev.preventDefault();
+            if (ev.target.getAttribute("draggable") == "true")
+                ev.dataTransfer.dropEffect = "none"; // dropping is not allowed
+            else
+                ev.dataTransfer.dropEffect = "all";
+        }
+        function dropComp(e){
+            e.preventDefault();
+            let listId = e.dataTransfer.getData('list');
+            document.getElementById(listId).style.backgroundColor = "#51BD7A";
+            e.target.appendChild(document.getElementById(listId));
+        }
+        function dropProg(e){
+            e.preventDefault();
+            let listId = e.dataTransfer.getData('list');
+            document.getElementById(listId).style.backgroundColor = "#EE9E58";
+            e.target.appendChild(document.getElementById(listId));
+        }
+   
+    </script>
+  
+</head>
+<body>
+
+    <div class="container">
+        <div id="progress" >
+            <h4>Progress</h4>
+            <ul id="prog" ondragover="allowDrop(event)" ondrop="dropProg(event)">
+                <li id="1" draggable="true" ondragstart="drag(event)">1 task</li>
+                <li id="2" draggable="true" ondragstart="drag(event)">2 task</li>
+                <li id="3" draggable="true" ondragstart="drag(event)">3 task</li>
+                <li id="4" draggable="true" ondragstart="drag(event)">4 task</li>
+                <li id="5" draggable="true" ondragstart="drag(event)">5 task</li>
+                <li id="6" draggable="true" ondragstart="drag(event)">6 task</li>
+
+            </ul>
+
+        </div>
+        <div id="complete">
+            <h4>Completed</h4>
+            <ul id="comp" ondragover="allowDrop(event)" ondrop="dropComp(event)">
+
+            </ul>
+
+
+        </div>
+    </div>
+    
+</body>
+</html>
